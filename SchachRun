@@ -1,0 +1,25 @@
+package schach;
+
+import java.util.Scanner;
+
+public class SchachRun {
+    static Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+
+        SchachGame.preparation();
+        SchachGame.ausgabe();
+
+        System.out.println("Spieler 1:");
+        System.out.println("Welche Figur möchten sie bewegen?");
+        System.out.print("> ");
+        String figure = scanner.next();
+        System.out.println("Wochin wollen Sie gehen?");
+        String move = SchachGame.convertMove(scanner.next());
+
+        if (SchachGame.checkMove(move) && Figure.moveIsPossible(move, figure)){
+            SchachGame.makeMove(figure, move);
+            SchachGame.ausgabe();
+        }
+        else System.out.println("Falsche Eingabe!");
+    }
+}

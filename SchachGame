@@ -1,0 +1,107 @@
+package schach;
+
+import SchachFiguren.Bauer;
+import SchachFiguren.Dame;
+import SchachFiguren.Koenig;
+import SchachFiguren.Laeufer;
+import SchachFiguren.Springer;
+import SchachFiguren.Turm;
+
+public class SchachGame {
+    public static String[][] feld = new String[8][8];
+
+    public static void preparation(){ //kein static
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                feld[i][j] = "   ";
+            }
+        }
+        //Bauer
+        for (int i = 0; i < 8; i++){
+            feld [1][i] = Bauer.white;
+            feld [6][i] = Bauer.black;
+        }
+        //Turm
+        feld [0][0] = feld [0][7] = Turm.white;
+        feld [7][0] = feld [7][7] = Turm.black;
+        // Springer
+        feld [0][1] = feld [0][6] = Springer.white;
+        feld [7][1] = feld [7][6] = Springer.black;
+        //Läufer
+        feld [0][2] = feld [0][5] = Laeufer.white;
+        feld [7][2] = feld [7][5] = Laeufer.black;
+        //Dame
+        feld [0][4] = Dame.white;
+        feld [7][4] = Dame.black;
+        //König
+        feld [0][3] = Koenig.white;
+        feld [7][3] = Koenig.black;
+    }
+
+    public static void ausgabe() {//kein static
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                //System.out.print("| %4d " + feld[i][j]);
+                System.out.printf("| " + feld[i][j] + " ");
+            }
+            System.out.print("|");
+            System.out.println();
+            System.out.println("--------------------------------------");
+        }
+
+    }
+     public static boolean checkMove(String move){//kein static
+         return (move.length() == 2) && (isLetter(move.substring(0, 1))) && (isNumeric(move.substring(1, 2)));
+     }
+
+    public static boolean isLetter(String name) {//kein static
+        return name.matches("[a-h]+");
+    }
+    public static boolean isNumeric(String str) {//kein static
+        return str != null && str.matches("[-+]?\\d*\\.?\\d+");
+    }
+
+    public static String convertMove(String move){
+        String x = move.substring(0, 1);
+        int y = Integer.parseInt(move.substring(1, 2));
+        int i = 0;
+
+        switch(x){
+        case "a":
+            i = 0;
+            break;
+        case "b":
+            i = 1;
+            break;
+        case "c":
+            i = 2;
+            break;
+        case "d":
+            i = 3;
+            break;
+        case "e":
+            i = 4;
+            break;
+        case "f":
+            i = 5;
+            break;
+        case "g":
+            i = 6;
+            break;
+        case "h":
+            i = 7;
+            break;
+        default:
+            System.out.println("Falsche Eingabe!");
+        }
+
+        int j = Math.abs(8 - y);
+
+        return feld[i][j];
+    }
+
+
+    public static void makeMove(String figure, String move){//kein static
+
+    }
+}

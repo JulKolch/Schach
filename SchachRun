@@ -14,7 +14,7 @@ public class SchachRun {
         System.out.print("> ");
         String figure = scanner.next();
         System.out.println("Wochin wollen Sie gehen?");
-        String move = SchachGame.convertMove(scanner.next());
+        String move = scanner.next();
 
         if (SchachGame.checkMove(move) && Figure.moveIsPossible(move, figure)){
             SchachGame.makeMove(figure, move);

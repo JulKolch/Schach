@@ -42,7 +42,7 @@ public class SchachGame {
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 //System.out.print("| %4d " + feld[i][j]);
-                System.out.printf("| " + feld[i][j] + " ");
+                System.out.print("| " + feld[i][j] + " ");
             }
             System.out.print("|");
             System.out.println();
@@ -61,9 +61,9 @@ public class SchachGame {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
     }
 
-    public static String convertMove(String move){
+    public static int xKoordnate(String move){
         String x = move.substring(0, 1);
-        int y = Integer.parseInt(move.substring(1, 2));
+
         int i = 0;
 
         switch(x){
@@ -94,10 +94,12 @@ public class SchachGame {
         default:
             System.out.println("Falsche Eingabe!");
         }
+        return i;
+    }
+    public static int yKoordnate(String move){
+        int y = Integer.parseInt(move.substring(1, 2));
+        return Math.abs(8 - y);
 
-        int j = Math.abs(8 - y);
-
-        return feld[i][j];
     }
 
 

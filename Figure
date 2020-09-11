@@ -1,1 +1,38 @@
+package schach;
+
+public class Figure {
+
+    public static String[][] pos = new String[8][8];
+    public int posX(String[]){
+
+    }
+    public int posY;
+
+    public static boolean moveIsPossible(String move, String figure) {//kein static
+
+        switch (figure) {
+        case "K":
+
+            break;
+        case "D":
+            break;
+        case "T":
+            break;
+        case "L":
+            break;
+        case "S":
+            break;
+        case "B":
+            break;
+        }
+        return false;
+    }
+
+    public void init() {
+    }
+
+    public void remove() {
+    }
+
+}
 

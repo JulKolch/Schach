@@ -1,1 +1,16 @@
+package SchachFiguren;
+
+import schach.Figure;
+
+public class Koenig extends Figure {
+    public static String black = "♔";  //black King
+    public static String white = "♚";  //white King
+
+    public int posX = feld
+
+    public static void moveIsPossible(String move, String figure) {
+
+    }
+
+}
 

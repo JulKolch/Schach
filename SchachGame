@@ -10,7 +10,8 @@ import SchachFiguren.Turm;
 public class SchachGame {
     public static String[][] feld = new String[8][8];
 
-    public static void preparation(){ //kein static
+
+    public void preparation(){
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 feld[i][j] = "   ";
@@ -38,7 +39,7 @@ public class SchachGame {
         feld [7][3] = Koenig.black;
     }
 
-    public static void ausgabe() {//kein static
+    public void ausgabe() {
         for (int i = 0; i < 8; i++){
             for (int j = 0; j < 8; j++){
                 //System.out.print("| %4d " + feld[i][j]);
@@ -50,18 +51,20 @@ public class SchachGame {
         }
 
     }
-     public static boolean checkMove(String move){//kein static
-         return (move.length() == 2) && (isLetter(move.substring(0, 1))) && (isNumeric(move.substring(1, 2)));
+     public boolean checkMove(String move){
+         return true;
+        //return (move.length() == 2) && (isLetter(move.substring(0, 1))) && (isNumeric(move.substring(1, 2)));
      }
 
-    public static boolean isLetter(String name) {//kein static
-        return name.matches("[a-h]+");
+    public boolean isLetter(String name) {
+        return name.matches("a") || name.matches("b");
+        //return name.matches("[a-h]+");
     }
-    public static boolean isNumeric(String str) {//kein static
+    public boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
     }
 
-    public static int xKoordnate(String move){
+    public int xKoordnate(String move){
         String x = move.substring(0, 1);
 
         int i = 0;
@@ -96,14 +99,10 @@ public class SchachGame {
         }
         return i;
     }
-    public static int yKoordnate(String move){
+    public int yKoordnate(String move){
         int y = Integer.parseInt(move.substring(1, 2));
         return Math.abs(8 - y);
 
     }
 
-
-    public static void makeMove(String figure, String move){//kein static
-
-    }
 }

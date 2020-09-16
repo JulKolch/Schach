@@ -1,25 +1,51 @@
 package schach;
 
+import SchachFiguren.Koenig;
+
 import java.util.Scanner;
 
 public class SchachRun {
     static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        SchachGame.preparation();
-        SchachGame.ausgabe();
+        SchachGame schachGame = new SchachGame();
+        Spieler spieler = new Spieler();
 
-        System.out.println("Spieler 1:");
-        System.out.println("Welche Figur möchten sie bewegen?");
-        System.out.print("> ");
-        String figure = scanner.next();
-        System.out.println("Wochin wollen Sie gehen?");
-        String move = scanner.next();
 
-        if (SchachGame.checkMove(move) && Figure.moveIsPossible(move, figure)){
-            SchachGame.makeMove(figure, move);
-            SchachGame.ausgabe();
+        schachGame.preparation();
+        schachGame.ausgabe();
+        int moveNumber = 0;
+
+        while (true) {
+            if (moveNumber % 2 == 0) {
+                System.out.println("Spieler 1:");
+
+                spieler.farbe = "black";
+            } else {
+                System.out.println("Spieler 2:");
+                spieler.farbe = "white";
+            }
+            System.out.println("Welche Figur möchten sie bewegen?");
+            System.out.print("> ");
+            String position = scanner.next();
+
+            System.out.println("Wochin wollen Sie gehen?");
+            System.out.print("> ");
+            String move = scanner.next();
+
+            int posStart = schachGame.xKoordnate(position) * 10 + schachGame.yKoordnate(position);
+            int posEnd = schachGame.xKoordnate(move) * 10 + schachGame.yKoordnate(move);
+
+            Koenig koenig = new Koenig(posStart, posEnd);
+            if (schachGame.checkMove(position) && schachGame.checkMove(move)) { //+ && Figure.moveIsPossible(pos, position)
+                if(koenig.moveIsPossible(posEnd/10, posEnd%10))
+                koenig.makeMove(posStart, posEnd);
+                schachGame.ausgabe();
+            } else {
+                System.out.println("Falsche Eingabe!");
+            }
+            moveNumber++;
         }
-        else System.out.println("Falsche Eingabe!");
     }
 }

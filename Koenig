@@ -1,16 +1,29 @@
 package SchachFiguren;
 
 import schach.Figure;
+import schach.SchachGame;
 
 public class Koenig extends Figure {
+    Type type;
+
     public static String black = "♔";  //black King
     public static String white = "♚";  //white King
 
-    public int posX = feld
 
-    public static void moveIsPossible(String move, String figure) {
+    public Koenig(int posStart, int posEnd){
+        super(posStart,posEnd);
+        type = Type.Koenig;
+    }
 
+    @Override
+    public boolean moveIsPossible(int xEnd, int yEnd){
+        return Math.abs(xEnd - this.xStart) == 1 || (Math.abs(yEnd - this.yStart) == 1);
+    }
+
+    @Override
+    public void makeMove(int posStart, int posEnd) {
+        SchachGame.feld[posEnd/10][posEnd%10]= "♔";
+        SchachGame.feld[posStart/10][posStart%10]= "   ";
     }
 
 }
-

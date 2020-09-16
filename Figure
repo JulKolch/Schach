@@ -1,38 +1,24 @@
 package schach;
 
-public class Figure {
+public abstract class Figure extends SchachRun{
 
-    public static String[][] pos = new String[8][8];
-    public int posX(String[]){
+    //public static String[][] pos = new String[8][8];
 
-    }
-    public int posY;
+    public int xStart, yStart;
 
-    public static boolean moveIsPossible(String move, String figure) {//kein static
+    public Spieler speiler;
 
-        switch (figure) {
-        case "K":
-
-            break;
-        case "D":
-            break;
-        case "T":
-            break;
-        case "L":
-            break;
-        case "S":
-            break;
-        case "B":
-            break;
-        }
-        return false;
+    public enum Type {
+        Koenig, Dame, Laeufer, Springer, Turm, Bauer
     }
 
-    public void init() {
+    public Figure(int xStart, int yStart) {
+        this.xStart = xStart;
+        this.yStart = yStart;
     }
 
-    public void remove() {
-    }
+    public abstract boolean moveIsPossible(int move, int figure);
+
+    public abstract void makeMove(int posStart, int posEnd);
 
 }
-

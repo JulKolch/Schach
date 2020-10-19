@@ -1,1 +1,45 @@
+package SchachFiguren;
+
+import schach.ChessGame;
+import schach.ColorFigure;
+import schach.Figure;
+
+public class Laeufer extends Figure {
+
+    Type type;
+
+    ChessGame chessGame = new ChessGame();
+    public Laeufer(int posStart, int posEnd, ColorFigure colorFigure){
+        super(posStart,posEnd, colorFigure);
+        type = Type.Laeufer;
+    }
+
+    public static String black = "♗";
+    public static String white = "♝";
+
+    @Override
+    public boolean moveIsPossible(int posStart, int posEnd){
+        if (Math.abs(posStart/10 - posEnd/10) == Math.abs(posStart%10 - posEnd%10))
+            return true;
+        else
+            {
+                System.out.println("Move is not possible");
+                return false;
+            }
+    }
+
+    @Override
+    public void makeMove(int posStart, int posEnd) {
+        if(chessGame.askColor(posStart) == ColorFigure.Black){
+            ChessGame.field[posEnd%10-1][posEnd/10-1].value= Laeufer.black;
+        } else {ChessGame.field[posEnd%10-1][posEnd/10-1].value= Laeufer.white;}
+        ChessGame.field[posStart%10-1][posStart/10-1].value= "   ";
+        ChessGame.field[posStart%10-1][posStart/10-1].type= Type.Null;
+        ChessGame.field[posEnd%10-1][posEnd/10-1].type = Type.Laeufer;
+        ChessGame.field[posStart%10-1][posStart/10-1].colorFigure = ColorFigure.Null;
+        ChessGame.field[posEnd%10-1][posEnd/10-1].colorFigure = chessGame.askColor(posStart);
+    }
+
+}
+
 

@@ -1,0 +1,77 @@
+package schach;
+
+import java.util.Scanner;
+
+public class ChessRun {
+    static Scanner scanner = new Scanner(System.in);
+
+    public enum Type {
+        Koenig, Dame, Laeufer, Springer, Turm, Bauer, Null
+    }
+
+    public static void main(String[] args) {
+
+        ChessGame chessGame = new ChessGame();
+        Player player = new Player();
+        Type type;
+
+        chessGame.preparation();
+        chessGame.initKoenig();
+        chessGame.initDame();
+        chessGame.initLaeufer();
+        chessGame.initSpringer();
+        chessGame.initTutm();
+        chessGame.initBauer();
+        chessGame.output();
+        int moveNumber = 0;
+
+
+        while (true) {
+            if (moveNumber % 2 == 0) {
+                player.colorPlayer = ColorPlayer.White;
+                System.out.println("Spieler 1 [Weiß]:");
+            } else {
+                player.colorPlayer = ColorPlayer.Black;
+                System.out.println("Spieler 2 [Schwarz]:");
+            }
+
+            System.out.println("Spaltennummer[A-H] dann Zeilennummer[1-8]");
+            System.out.println("Welche Figur möchten sie bewegen?");
+            System.out.print("> ");
+            String position = scanner.next();
+
+            System.out.println("Wochin wollen Sie gehen?");
+            System.out.print("> ");
+            String move = scanner.next();
+
+            //Start- und Endposition der Figur(x+y)
+            int posStart = chessGame.xKoordnate(position) * 10 + chessGame.yKoordnate(position);
+            int posEnd = chessGame.xKoordnate(move) * 10 + chessGame.yKoordnate(move);
+
+            Coordinate start = new Coordinate(position);
+            Coordinate destination = new Coordinate(move);
+
+            type = ChessGame.getType(posStart);
+            Figure figure = chessGame.detectFigure(posStart, posEnd, type);
+            figure.type = type;
+            Figure.colorFigure = chessGame.askColor(posStart);
+
+                    //Überprüfung auf korrekte Eingabe
+            if (chessGame.checkMove(position) && chessGame.checkMove(move)) {
+                //Überprüfung auf die Möglichkeit eines Spielzuges
+                if(figure.moveIsPossible(posStart, posEnd)
+                        && chessGame.checkColor(player, figure)
+                        && figure.pathForMoveIsFree(posStart, posEnd)) {
+                    System.out.println(figure.type);
+                    figure.makeMove(posStart, posEnd);
+                    chessGame.output();
+                    moveNumber++;
+                }
+            } else {
+                System.out.println("Falsche Eingabe!");
+            }
+
+        }
+
+    }
+}

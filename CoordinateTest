@@ -1,0 +1,36 @@
+package schach;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CoordinateTest {
+
+    @Test
+    void contructorWithXY() {
+
+        Coordinate cord = new Coordinate(1,2);
+
+        assertEquals(1, cord.getX());
+        assertEquals(2, cord.getY());
+    }
+
+    @Test
+    void contructorWithString() {
+
+        Coordinate cord = new Coordinate("A2");
+
+        assertEquals(0, cord.getX());
+        assertEquals(1, cord.getY());
+    }
+
+    @Test
+    void getHumanReadable() {
+
+        Coordinate cord = new Coordinate(0,2);
+        final String humanReadable = cord.getHumanReadable();
+
+        assertEquals("A3", humanReadable);
+
+    }
+}

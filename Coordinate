@@ -1,0 +1,58 @@
+package schach;
+
+public class Coordinate {
+
+    private static int CHAR_ASCII_A = 65;
+    private static int CHAR_ASCII_0 = 48;
+
+    private int x;
+    private int y;
+
+    Coordinate(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    Coordinate(String humanInput) {
+        transformHumanReadableToInts(humanInput);
+    }
+
+    public String getHumanReadable() {
+        return transformIntsToHumanReadable();
+    }
+
+    private void transformHumanReadableToInts(String input) {
+
+        input = input.toUpperCase();
+
+        this.x = input.charAt(0) - CHAR_ASCII_A;
+        this.y = input.charAt(1) - CHAR_ASCII_0 - 1;
+    }
+
+    private String transformIntsToHumanReadable() {
+        char c1 = (char) (x + CHAR_ASCII_A);
+        char c2 = (char) (y + 1 + CHAR_ASCII_0);
+
+        String output = "";
+        output += c1;
+        output += c2;
+
+        return output;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+}

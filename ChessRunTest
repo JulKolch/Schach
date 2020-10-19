@@ -1,0 +1,28 @@
+package schach;
+
+import SchachFiguren.Turm;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ChessRunTest {
+    public static Field[][] field = new Field[8][8];
+
+
+    @Test
+    public void preparation(){
+        ChessGame chessGame = new ChessGame();
+
+        chessGame.preparation();
+        assertEquals(Turm.white, field[0][0].value);//NullPointerException
+        assertEquals(ChessRun.Type.Turm, field[0][0].type);
+    }
+
+    @Test
+    public void askColor(){
+        ChessGame chessGame = new ChessGame();
+        int posStart = 11;
+        assertEquals(ColorFigure.White, chessGame.askColor(posStart));
+    }
+
+}

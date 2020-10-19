@@ -1,0 +1,19 @@
+package schach;
+
+public class Field {
+    public int x, y;
+    public String value;
+    public ChessRun.Type type;
+    public ColorFigure colorFigure;
+
+
+
+    public Field(int x, int y, String value, ChessRun.Type type, ColorFigure colorFigure) {
+        this.x = x;
+        this.y = y;
+        this.value = value;
+        this.type = type;
+        this.colorFigure = colorFigure;
+    }
+
+}

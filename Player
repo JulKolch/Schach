@@ -1,0 +1,8 @@
+package schach;
+
+public class Player {
+
+    ColorPlayer colorPlayer;
+
+
+}

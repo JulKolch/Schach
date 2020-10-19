@@ -1,5 +1,0 @@
-package schach;
-
-public class Spieler {
-    public String farbe ;
-}

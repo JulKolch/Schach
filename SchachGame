@@ -7,102 +7,188 @@ import SchachFiguren.Laeufer;
 import SchachFiguren.Springer;
 import SchachFiguren.Turm;
 
-public class SchachGame {
-    public static String[][] feld = new String[8][8];
 
+public class ChessGame {
 
-    public void preparation(){
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                feld[i][j] = "   ";
+    public static Field[][] field = new Field[8][8];
+
+    public void preparation() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                field[i][j] = new Field(i, j, "    ", ChessRun.Type.Null, ColorFigure.Null);
+                //field[i][j].value = "   ";
             }
         }
-        //Bauer
-        for (int i = 0; i < 8; i++){
-            feld [1][i] = Bauer.white;
-            feld [6][i] = Bauer.black;
-        }
-        //Turm
-        feld [0][0] = feld [0][7] = Turm.white;
-        feld [7][0] = feld [7][7] = Turm.black;
-        // Springer
-        feld [0][1] = feld [0][6] = Springer.white;
-        feld [7][1] = feld [7][6] = Springer.black;
-        //Läufer
-        feld [0][2] = feld [0][5] = Laeufer.white;
-        feld [7][2] = feld [7][5] = Laeufer.black;
-        //Dame
-        feld [0][4] = Dame.white;
-        feld [7][4] = Dame.black;
+    }
+
+    public void initKoenig(){
         //König
-        feld [0][3] = Koenig.white;
-        feld [7][3] = Koenig.black;
+        field[0][3].value = Koenig.white;
+        field[7][3].value = Koenig.black;
+        field[0][3].colorFigure = ColorFigure.White;
+        field[7][3].colorFigure = ColorFigure.Black;
+        field[0][3].type = field[7][3].type = ChessRun.Type.Koenig;
     }
 
-    public void ausgabe() {
-        for (int i = 0; i < 8; i++){
-            for (int j = 0; j < 8; j++){
-                //System.out.print("| %4d " + feld[i][j]);
-                System.out.print("| " + feld[i][j] + " ");
-            }
-            System.out.print("|");
-            System.out.println();
-            System.out.println("--------------------------------------");
+    public void initDame(){
+        //Dame
+        field[0][4].value = Dame.white;
+        field[7][4].value = Dame.black;
+        field[0][4].type = field[7][4].type = ChessRun.Type.Dame;
+        field[0][4].colorFigure = ColorFigure.White;
+        field[7][4].colorFigure = ColorFigure.Black;
+    }
+
+    public void initLaeufer(){
+        //Läufer
+        field[0][2].value = field[0][5].value = Laeufer.white;
+        field[7][2].value = field[7][5].value = Laeufer.black;
+        field[0][2].type = field[0][5].type = field[7][2].type = field[7][5].type = ChessRun.Type.Laeufer;
+        field[0][2].colorFigure = field[0][5].colorFigure = ColorFigure.White;
+        field[7][2].colorFigure = field[7][5].colorFigure = ColorFigure.Black;
+    }
+
+    public void initSpringer(){
+        // Springer
+        field[0][1].value = field[0][6].value = Springer.white;
+        field[7][1].value = field[7][6].value = Springer.black;
+        field[0][1].type = field[0][6].type = field[7][1].type = field[7][6].type = ChessRun.Type.Springer;
+        field[0][1].colorFigure = field[0][6].colorFigure = ColorFigure.White;
+        field[7][1].colorFigure = field[7][6].colorFigure = ColorFigure.Black;
+    }
+
+    public void initTutm(){
+        //Turm
+        field[0][0].value = field[0][7].value = Turm.white;
+        field[7][0].value = field[7][7].value = Turm.black;
+        field[0][0].type = field[0][7].type = field[7][0].type = field[7][7].type = ChessRun.Type.Turm;
+        field[0][0].colorFigure = field[0][7].colorFigure = ColorFigure.White;
+        field[7][0].colorFigure = field[7][7].colorFigure = ColorFigure.Black;
+    }
+
+    public void initBauer(){
+        //Bauer
+        for (int i = 0; i < 8; i++) {
+            field[1][i].value = Bauer.white;
+            field[6][i].value = Bauer.black;
+            field[1][i].type = field[6][i].type = ChessRun.Type.Bauer;
+            field[1][i].colorFigure = ColorFigure.White;
+            field[6][i].colorFigure = ColorFigure.Black;
         }
+    }
+
+    public void output() {
+        drawLetterLine();
+        System.out.println("===========================================");
+        for (int i = 0; i < 7; i++) {
+            System.out.print(i + 1 + " |");
+            for (int j = 0; j < 8; j++) {
+                System.out.print("| " + field[i][j].value + " ");
+            }
+            System.out.print("| " + (i + 1));
+            System.out.println();
+            System.out.println("-------------------------------------------");
+        }
+        System.out.print(8 + " |");
+        for (int j = 0; j < 8; j++) {
+            System.out.print("| " + field[7][j].value + " ");
+        }
+        System.out.print("| " + 8);
+        System.out.println();
+        System.out.println("===========================================");
+        drawLetterLine();
 
     }
-     public boolean checkMove(String move){
-         return true;
-        //return (move.length() == 2) && (isLetter(move.substring(0, 1))) && (isNumeric(move.substring(1, 2)));
-     }
+
+    private void drawLetterLine() {
+        System.out.print("    ");
+        for (int i = 0; i < 8; i++) {
+            System.out.print("| " + (char) (65 + i) + " ");
+            if (i % 2 == 1) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println("|");
+
+    }
+
+    public boolean checkMove(String move) {
+        return (move.length() == 2) && (isLetter(move.substring(0, 1))) && (isNumeric(move.substring(1, 2)));
+    }
 
     public boolean isLetter(String name) {
-        return name.matches("a") || name.matches("b");
-        //return name.matches("[a-h]+");
+        return name.matches("[a-h]+");
     }
+
     public boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
     }
 
-    public int xKoordnate(String move){
-        String x = move.substring(0, 1);
+    public int xKoordnate(String move) {
+        char xChar = move.charAt(0);
+        int xValue = xChar - 97;
 
-        int i = 0;
-
-        switch(x){
-        case "a":
-            i = 0;
-            break;
-        case "b":
-            i = 1;
-            break;
-        case "c":
-            i = 2;
-            break;
-        case "d":
-            i = 3;
-            break;
-        case "e":
-            i = 4;
-            break;
-        case "f":
-            i = 5;
-            break;
-        case "g":
-            i = 6;
-            break;
-        case "h":
-            i = 7;
-            break;
-        default:
-            System.out.println("Falsche Eingabe!");
+        if (xValue < 0 || xValue > 7) {
+            System.out.println("Falsche Eingabe");
         }
-        return i;
+        return xValue + 1;
     }
-    public int yKoordnate(String move){
+
+    public int yKoordnate(String move) {
         int y = Integer.parseInt(move.substring(1, 2));
-        return Math.abs(8 - y);
+        return Math.abs(y);
 
     }
 
+    public ColorFigure askColor(int posStart) {
+        return field[posStart % 10 - 1][posStart / 10 - 1].colorFigure;//NULL
+    }
+
+    public static ChessRun.Type getType(int posStart) {
+        return field[posStart % 10 - 1][posStart / 10 - 1].type;
+    }
+
+    public boolean checkColor(Player player, Figure figure) {
+
+        boolean bothWhite = player.colorPlayer == ColorPlayer.White && Figure.colorFigure == ColorFigure.White;
+        boolean bothBlack = player.colorPlayer == ColorPlayer.Black && Figure.colorFigure == ColorFigure.Black;
+        System.out.println("Spieler " + player.colorPlayer);
+        System.out.println("Figur " + Figure.colorFigure);
+        if (bothWhite || bothBlack) {
+            System.out.println("Color++");
+            return true;
+        } else {
+            System.out.println("Color--");
+            return false;
+        }
+    }
+
+    public Figure detectFigure(int posStart, int posEnd, ChessRun.Type type){
+
+        Figure figure;
+
+        switch (type){
+        case Koenig:
+            figure = new Koenig(posStart, posEnd, Figure.colorFigure = askColor(posStart));
+            return figure;
+        case Dame:
+            figure =  new Dame(posStart, posEnd, Figure.colorFigure = askColor(posStart));
+            return figure;
+        case Laeufer:
+            figure =  new Laeufer(posStart, posEnd, Figure.colorFigure = askColor(posStart));
+            return figure;
+        case Springer:
+            figure =  new Springer(posStart, posEnd, Figure.colorFigure = askColor(posStart));
+            return figure;
+        case Turm:
+            figure =  new Turm(posStart, posEnd, Figure.colorFigure = askColor(posStart));
+            return figure;
+        case Bauer:
+            figure =  new Bauer(posStart, posEnd, Figure.colorFigure = askColor(posStart));
+            return figure;
+        default:
+            return null;
+        }
+
+    }
 }

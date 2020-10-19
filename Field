@@ -1,19 +1,124 @@
 package schach;
 
-public class Field {
-    public int x, y;
-    public String value;
+public abstract class Figure extends ChessRun {
+
+    ChessGame chessGame = new ChessGame();
+    public int xStart, yStart;
+    static ColorFigure colorFigure;
     public ChessRun.Type type;
-    public ColorFigure colorFigure;
+    public String value;
 
-
-
-    public Field(int x, int y, String value, ChessRun.Type type, ColorFigure colorFigure) {
-        this.x = x;
-        this.y = y;
-        this.value = value;
-        this.type = type;
+    public Figure(int xStart, int yStart, ColorFigure colorFigure) {
+        this.xStart = xStart;
+        this.yStart = yStart;
         this.colorFigure = colorFigure;
     }
+
+
+    public abstract boolean moveIsPossible(int move, int figure);
+
+    public abstract void makeMove(int posStart, int posEnd);
+
+    public boolean pathForMoveIsFree(int posStart, int posEnd) {
+        //überprüfen, dass die Figuren nicht durch andere Figuren gehen
+        boolean free = true;
+        int xStart = posStart % 10 - 1;
+        int yStart = posStart / 10 - 1;
+        int xEnd = posEnd % 10 - 1;
+        int yEnd = posEnd / 10 - 1;
+        int delta_x = xEnd - xStart;
+        int delta_y = yEnd - yStart;
+        ColorFigure presentColorFigure = chessGame.askColor(posStart);
+        System.out.println("Present Color is " + presentColorFigure);
+        ColorFigure oppositeColorFigure;
+        if (presentColorFigure == ColorFigure.Black)
+            oppositeColorFigure = ColorFigure.White;
+        else oppositeColorFigure = ColorFigure.Black;
+        System.out.println("Opposite Color is " + oppositeColorFigure);
+
+        if (delta_x >= 0 && delta_y >= 0) {
+            System.out.println("Case 1 [+ +]");
+            if (delta_x == 0) {//horizontal
+                for (int i = 1; i <= delta_y; i++) {
+                    if ((ChessGame.field[xStart][yStart + i].type != Type.Null)
+                            && ChessGame.field[xEnd][yEnd].colorFigure != oppositeColorFigure) {
+                        free = false;
+                        break;
+                    }
+                }
+            } else if (delta_y == 0) {//vertikal
+                for (int i = 1; i <= delta_x; i++) {
+                    if (ChessGame.field[xStart + i][yStart].type != Type.Null) {
+                        free = false;
+                        break;
+                    }
+                }
+            } else {//sonst - diagonal
+                for (int i = 1; i <= delta_x; i++) {
+                    if (ChessGame.field[xStart + i][yStart + i].type != Type.Null) {
+                        free = false;
+                        break;
+                    }
+                }
+            }
+        } else if (delta_x >= 0) {
+            System.out.println("Case 2 [+ -]");
+            if (delta_x == 0) {//horizontal
+                for (int i = delta_y; i >= -1; i--) {
+                    if (ChessGame.field[xStart][yStart + i].type != Type.Null) {
+                        free = false;
+                        break;
+                    }
+                }
+            } else {//sonst - diagonal
+                for (int i = 1; i <= delta_x; i++) {
+                    if (ChessGame.field[xStart + i][yStart - i].type != Type.Null) {
+                        free = false;
+                        break;
+                    }
+                }
+            }
+        } else if (delta_y >= 0) {
+            System.out.println("Case 3 [- +]");
+            if (delta_y == 0) {//vertikal
+                for (int i = delta_x; i >= -1; i--) {
+                    if (ChessGame.field[xStart + i][yStart].type != Type.Null) {
+                        free = false;
+                        break;
+                    }
+                }
+            } else {//sonst - diagonal
+                for (int i = 1; i <= delta_y; i++) {
+                    if (ChessGame.field[xStart - i][yStart + i].type != Type.Null) {
+                        free = false;
+                        break;
+                    }
+                }
+            }
+        } else {
+            System.out.println("Case 4 [- -]");
+            //nur diagonal
+            for (int i = 1; i <= -delta_x; i++) {
+                if (ChessGame.field[xStart - i][yStart - i].type != Type.Null) {
+                    free = false;
+                    break;
+
+                }
+            }
+        }
+
+        System.out.println(xStart + " - " + yStart + " - Start");
+        System.out.println(xEnd + " - " + yEnd + " - End");
+        System.out.println(ChessGame.field[xStart][yStart].type + " - Start");
+        System.out.println(ChessGame.field[xEnd][yEnd].type + " - End");
+        if (!free)
+            System.out.println("Move is not possible because of a barrier");
+        return free;
+    }
+
+    public void pathFor1Case(){
+
+    }
+
 
 }
